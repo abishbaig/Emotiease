@@ -1,6 +1,13 @@
-# Emotiease: AI-Powered Mental Health Support
-
-<p><strong>Emotiease</strong> is an innovative mobile app designed to bridge the gap in accessible mental health care. In a world where mental health support is often inaccessible due to stigma, cost, or lack of immediate access, Emotiease aims to empower individuals by providing real-time, AI-driven support for managing stress, anxiety, and depression. Our goal is to offer users the ability to take control of their mental well-being with personalized, timely, and easily accessible resources.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotiease: AI-Powered Mental Health Support</title>
+</head>
+<body>
+    <h1>Emotiease: AI-Powered Mental Health Support</h1>
+    <p><strong>Emotiease</strong> is an innovative mobile app designed to bridge the gap in accessible mental health care. In a world where mental health support is often inaccessible due to stigma, cost, or lack of immediate access, Emotiease aims to empower individuals by providing real-time, AI-driven support for managing stress, anxiety, and depression. Our goal is to offer users the ability to take control of their mental well-being with personalized, timely, and easily accessible resources.</p>
 
     <h2>Project Overview</h2>
     <p>Mental health challenges are widespread, but many people struggle to receive the help they need in time. Traditional care systems are often overwhelmed, and help can be difficult to obtain. <strong>Emotiease</strong> changes that by offering an AI-powered, proactive solution that recognizes early signs of emotional distress and provides real-time support.</p>
@@ -45,3 +52,5 @@
 
     <h2>License</h2>
     <p>Distributed under the MIT License. See <code>LICENSE</code> for more information.</p>
+</body>
+</html>
