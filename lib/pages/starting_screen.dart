@@ -1,3 +1,4 @@
+import 'package:emotiease/pages/signin_screen.dart';
 import 'package:flutter/material.dart';
 
 class StartingScreen extends StatelessWidget {
@@ -10,17 +11,39 @@ class StartingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Scaffold widget provides the basic visual structure for the screen
-    return Scaffold(
-      backgroundColor:
-          Colors.black, // Setting the background color of the screen
-      body: Stack(
-        // Stack widget allows layering of different UI elements
-        children: [
-          _buildTopCircle(), // Adds the top decorative circle
-          _buildBottomCircle(), // Adds the bottom decorative circle
-          _buildCenteredContent(), // Centers the main content in the middle of the screen
-        ],
+    return GestureDetector(
+      onTap: () {
+        // Navigate to the Sign In Screen
+        Navigator.of(context).push(_fadeRoute(const SignInScreen()));
+      },
+      child: Scaffold(
+        backgroundColor:
+            Colors.black, // Setting the background color of the screen
+        body: Stack(
+          // Stack widget allows layering of different UI elements
+          children: [
+            _buildTopCircle(), // Adds the top decorative circle
+            _buildBottomCircle(), // Adds the bottom decorative circle
+            _buildCenteredContent(), // Centers the main content in the middle of the screen
+          ],
+        ),
       ),
+    );
+  }
+
+// Function to create a custom fade route
+  PageRouteBuilder _fadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        // Fade transition effect
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      transitionDuration:
+          const Duration(milliseconds: 3000), // Transition duration
     );
   }
 
@@ -67,6 +90,9 @@ class StartingScreen extends StatelessWidget {
             mainAxisAlignment:
                 MainAxisAlignment.center, // Center the row horizontally
             children: [
+              const SizedBox(
+                width: 17,
+              ),
               _buildSubtitleText(), // Subtitle text with regular font size
               _buildHighlightedText(), // The highlighted "get started" text in lime green
             ],
@@ -90,7 +116,7 @@ class StartingScreen extends StatelessWidget {
   // Function to build the subtitle text
   Widget _buildSubtitleText() {
     return const Text(
-      '    Tap on the screen to ', // Instructional text leading to the action
+      'Tap on the screen to ', // Instructional text leading to the action
       style: TextStyle(
         color: Colors.white, // White text for clarity
         fontSize: 13, // Smaller font size for subtitle

@@ -1,4 +1,3 @@
-import 'package:emotiease/pages/signin_screen.dart';
 import 'package:emotiease/pages/starting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         fontFamily: "Poppins",
       ),
-      home: const SignInScreen(),
+      home: const StartingScreen(),
     );
   }
 }
