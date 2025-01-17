@@ -81,7 +81,9 @@ class SignInScreen extends StatelessWidget {
           TextButton(
             onPressed: () {},
             style: const ButtonStyle(
-              overlayColor: WidgetStatePropertyAll(Colors.transparent),
+              //surfaceTintColor: WidgetStatePropertyAll(Colors.amberAccent),
+              overlayColor:
+                  WidgetStatePropertyAll(Color.fromARGB(179, 59, 57, 57)),
             ),
             child: const Text(
               'Continue with Google',
@@ -116,7 +118,8 @@ class SignInScreen extends StatelessWidget {
           TextButton(
             onPressed: () {},
             style: const ButtonStyle(
-              overlayColor: WidgetStatePropertyAll(Colors.transparent),
+              overlayColor:
+                  WidgetStatePropertyAll(Color.fromARGB(179, 59, 57, 57)),
             ),
             child: const Text(
               'Continue with Facebook',
@@ -152,7 +155,7 @@ class SignInScreen extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'E-mail',
-          hintStyle: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          hintStyle: const TextStyle(color: Color.fromARGB(255, 123, 118, 118)),
           filled: true,
           fillColor: Colors.transparent,
           border: OutlineInputBorder(
@@ -179,7 +182,7 @@ class SignInScreen extends StatelessWidget {
         obscureText: true,
         decoration: InputDecoration(
           hintText: 'Password',
-          hintStyle: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          hintStyle: const TextStyle(color: Color.fromARGB(255, 123, 118, 118)),
           filled: true,
           fillColor: Colors.transparent,
           border: OutlineInputBorder(
@@ -219,25 +222,24 @@ class SignInScreen extends StatelessWidget {
 
   // Function to build sign-in button
   Widget _buildSignInButton(double screenWidth) {
-    return GestureDetector(
-      onTap: () {
-        // Handle sign-in action
-      },
-      child: Container(
-        height: 50,
-        width: screenWidth,
-        decoration: BoxDecoration(
-          gradient: const RadialGradient(
-            colors: [Colors.pinkAccent, Colors.pink],
-            radius: 9,
-          ),
-          borderRadius: BorderRadius.circular(8),
+    return Container(
+      height: 50,
+      width: screenWidth,
+      decoration: BoxDecoration(
+        gradient: const RadialGradient(
+          colors: [Colors.pinkAccent, Colors.pink],
+          radius: 9,
         ),
-        child: const Center(
-          child: Text(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Center(
+        child: TextButton(
+          //style: TextStyle(color: Colors.white, fontSize: 18),
+          child: const Text(
             'Sign In.',
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
+          onPressed: () {},
         ),
       ),
     );

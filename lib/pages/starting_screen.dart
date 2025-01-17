@@ -43,7 +43,7 @@ class StartingScreen extends StatelessWidget {
         );
       },
       transitionDuration:
-          const Duration(milliseconds: 3000), // Transition duration
+          const Duration(milliseconds: 1000), // Transition duration
     );
   }
 
