@@ -1,45 +1,57 @@
 import 'package:flutter/material.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final screenHeight =
         MediaQuery.of(context).size.height; // For dynamic height
     final screenWidth = MediaQuery.of(context).size.width; // For dynamic width
-
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
+    return Material(
+      color: Colors.black,
+      child: SafeArea(
         child: SingleChildScrollView(
-          // Prevent overflow when the keyboard appears
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: screenHeight * 0.05), // Responsive spacing
-                _buildTitle(),
-                SizedBox(height: screenHeight * 0.05),
-                _buildGoogleButton(),
-                SizedBox(height: screenHeight * 0.02),
-                _buildFacebookButton(),
-                SizedBox(height: screenHeight * 0.03),
-                _buildOrSeparator(),
-                SizedBox(height: screenHeight * 0.03),
-                _buildEmailField(),
-                SizedBox(height: screenHeight * 0.02),
-                _buildPasswordField(),
-                SizedBox(height: screenHeight * 0.01),
-                _buildForgotPassword(),
-                SizedBox(height: screenHeight * 0.04),
-                _buildDragInstruction(),
-                SizedBox(height: screenHeight * 0.02),
-                _buildSignInButton(screenWidth),
-                SizedBox(height: screenHeight * 0.03),
-                _buildFooter(),
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: screenHeight * 0.05), // Responsive spacing
+                  _signInHeader(),
+                  SizedBox(height: screenHeight * 0.05),
+                  _formFields(screenWidth),
+                  SizedBox(height: screenHeight * 0.02),
+                  _forgetPassBtn(screenWidth),
+
+                  //_buildGoogleButton(),
+                  //SizedBox(height: screenHeight * 0.02),
+                  //_buildFacebookButton(),
+                  //SizedBox(height: screenHeight * 0.03),
+                  //_buildOrSeparator(),
+                  //SizedBox(height: screenHeight * 0.03),
+                  //_buildEmailField(),
+                  //SizedBox(height: screenHeight * 0.02),
+                  //_buildPasswordField(),
+                  //SizedBox(height: screenHeight * 0.01),
+                  //_buildForgotPassword(),
+                  //SizedBox(height: screenHeight * 0.04),
+                  //_buildDragInstruction(),
+                  //SizedBox(height: screenHeight * 0.02),
+                  //_buildSignInButton(screenWidth),
+                  //SizedBox(height: screenHeight * 0.03),
+                  //_buildFooter(),
+                ],
+              ),
             ),
           ),
         ),
@@ -48,7 +60,7 @@ class SignInScreen extends StatelessWidget {
   }
 
   // Function to build the title
-  Widget _buildTitle() {
+  Widget _signInHeader() {
     return const Text(
       'Sign In.',
       style: TextStyle(
@@ -59,209 +71,97 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  // Function to build Google button
-  Widget _buildGoogleButton() {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(
-          color: const Color.fromARGB(100, 217, 217, 217),
-          width: 3,
-        ),
+  Widget _formFields(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.02,
+        vertical: 16,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          //const SizedBox(width: 12),
-          Image.asset(
-            "assets/images/googleIcon.png",
-          ),
-          const SizedBox(width: 12),
-          const Text(
-            'Continue with Google',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Function to build Facebook button
-  Widget _buildFacebookButton() {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(
-          color: const Color.fromARGB(100, 217, 217, 217),
-          width: 3,
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(width: 12),
-          const Icon(Icons.facebook, color: Colors.white),
-          const SizedBox(width: 5),
-          TextButton(
-            onPressed: () {},
-            style: const ButtonStyle(
-              overlayColor:
-                  WidgetStatePropertyAll(Color.fromARGB(179, 59, 57, 57)),
-            ),
-            child: const Text(
-              'Continue with Facebook',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+          TextFormField(
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
               ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              hintText: "Email",
+              hintStyle: const TextStyle(
+                fontSize: 18,
+              ),
+              filled: true,
+              fillColor: const Color.fromRGBO(179, 132, 255, 0.2),
             ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Email cannot be empty!";
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: screenWidth * 0.04),
+          TextFormField(
+            obscureText: true,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              hintText: "Password",
+              hintStyle: const TextStyle(
+                fontSize: 18,
+              ),
+              filled: true,
+              fillColor: const Color.fromRGBO(179, 132, 255, 0.2),
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Password cannot be empty!!";
+              }
+              return null;
+            },
           ),
         ],
       ),
     );
   }
 
-  // Function to build the "OR" separator
-  Widget _buildOrSeparator() {
-    return const Text(
-      'or',
-      style: TextStyle(color: Colors.grey, fontSize: 16),
-    );
-  }
-
-  // Function to build email field
-  Widget _buildEmailField() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(
-          color: const Color.fromARGB(100, 217, 217, 217),
-          width: 3,
-        ),
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'E-mail',
-          hintStyle: const TextStyle(color: Color.fromARGB(255, 123, 118, 118)),
-          filled: true,
-          fillColor: Colors.transparent,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(17),
-            borderSide: BorderSide.none,
-          ),
-        ),
-        style: const TextStyle(color: Colors.white),
-      ),
-    );
-  }
-
-  // Function to build password field
-  Widget _buildPasswordField() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(
-          color: const Color.fromARGB(100, 217, 217, 217),
-          width: 3,
-        ),
-      ),
-      child: TextField(
-        obscureText: true,
-        decoration: InputDecoration(
-          hintText: 'Password',
-          hintStyle: const TextStyle(color: Color.fromARGB(255, 123, 118, 118)),
-          filled: true,
-          fillColor: Colors.transparent,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
-          ),
-        ),
-        style: const TextStyle(color: Colors.white),
-      ),
-    );
-  }
-
-  // Function to build "Forgot Password" text
-  Widget _buildForgotPassword() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () {
-          // Handle "Forgot Password"
-        },
+  Widget _forgetPassBtn(double screenWidth) {
+    return InkWell(
+      child: Container(
+        color: Colors.transparent,
+        width: screenWidth * 0.87,
         child: const Text(
-          'Forgot password?',
+          "Forgot Password?",
+          textAlign: TextAlign.end,
           style: TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255), fontSize: 12),
-        ),
-      ),
-    );
-  }
-
-  // Function to build the drag instruction
-  Widget _buildDragInstruction() {
-    return const Text(
-      'Drag on sign-in button to move to the next screen',
-      style: TextStyle(color: Colors.grey, fontSize: 10),
-    );
-  }
-
-  // Function to build sign-in button
-  Widget _buildSignInButton(double screenWidth) {
-    return Container(
-      height: 50,
-      width: screenWidth,
-      decoration: BoxDecoration(
-        gradient: const RadialGradient(
-          colors: [Colors.pinkAccent, Colors.pink],
-          radius: 9,
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child: TextButton(
-          //style: TextStyle(color: Colors.white, fontSize: 18),
-          child: const Text(
-            'Sign In.',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-          onPressed: () {},
-        ),
-      ),
-    );
-  }
-
-  // Function to build the footer
-  Widget _buildFooter() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          "Don't have an account? ",
-          style: TextStyle(color: Colors.grey, fontSize: 12),
-        ),
-        GestureDetector(
-          onTap: () {
-            // Handle "Create Account"
-          },
-          child: TextButton(
-            onPressed: () {
-              // Handle "Forgot Password"
-            },
-            child: const Text(
-              'Create a account',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255), fontSize: 14),
-            ),
+            color: Colors.white,
+            fontSize: 16,
           ),
         ),
-      ],
+      ),
     );
   }
+
+  
 }

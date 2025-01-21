@@ -31,11 +31,10 @@ class _StartingScreenState extends State<StartingScreen> {
         // Navigate to the Sign In Screen
         await Future.delayed(const Duration(seconds: 1));
         await Navigator.pushReplacement(
-            context,
-            //AppRoutes.signInScreen,
-            MaterialPageRoute(
-              builder: (context) => const SignInScreen(),
-            ));
+          context,
+          //AppRoutes.signInScreen,
+          MaterialPageRoute(builder: (context) => SignInScreen(),)
+        );
         setState(() {
           gestureTap = false;
         });
