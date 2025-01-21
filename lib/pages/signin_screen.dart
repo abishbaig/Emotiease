@@ -78,19 +78,11 @@ class SignInScreen extends StatelessWidget {
             "assets/images/googleIcon.png",
           ),
           const SizedBox(width: 12),
-          TextButton(
-            onPressed: () {},
-            style: const ButtonStyle(
-              //surfaceTintColor: WidgetStatePropertyAll(Colors.amberAccent),
-              overlayColor:
-                  WidgetStatePropertyAll(Color.fromARGB(179, 59, 57, 57)),
-            ),
-            child: const Text(
-              'Continue with Google',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
+          const Text(
+            'Continue with Google',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
             ),
           ),
         ],

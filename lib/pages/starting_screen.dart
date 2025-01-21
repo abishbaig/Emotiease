@@ -1,25 +1,47 @@
 import 'package:emotiease/pages/signin_screen.dart';
+import 'package:emotiease/routes/routes.dart';
 import 'package:flutter/material.dart';
 
-class StartingScreen extends StatelessWidget {
+class StartingScreen extends StatefulWidget {
   //* Data Members
-  // No data members required for this screen as it's a simple static UI
+  //double _deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
+  //double _deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
   //* Member Functions
   const StartingScreen({super.key});
 
   @override
+  State<StartingScreen> createState() => _StartingScreenState();
+}
+
+class _StartingScreenState extends State<StartingScreen> {
+  //* Data Members
+  bool gestureTap = false;
+
+  @override
   Widget build(BuildContext context) {
+    //final double _deviceHeight = MediaQuery.of(context).size.height;
+    //final double _deviceWidth = MediaQuery.of(context).size.width;
+
     // Scaffold widget provides the basic visual structure for the screen
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        setState(() {
+          gestureTap = true;
+        });
         // Navigate to the Sign In Screen
-        Navigator.of(context).push(_fadeRoute(const SignInScreen()));
+        await Future.delayed(const Duration(seconds: 1));
+        await Navigator.pushReplacement(
+          context,
+          //AppRoutes.signInScreen,
+          MaterialPageRoute(builder: (context) => const SignInScreen(),)
+        );
+        setState(() {
+          gestureTap = false;
+        });
       },
-      child: Scaffold(
-        backgroundColor:
-            Colors.black, // Setting the background color of the screen
-        body: Stack(
+      child: Material(
+        child: Stack(
           // Stack widget allows layering of different UI elements
           children: [
             _buildTopCircle(), // Adds the top decorative circle
@@ -31,22 +53,6 @@ class StartingScreen extends StatelessWidget {
     );
   }
 
-// Function to create a custom fade route
-  PageRouteBuilder _fadeRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        // Fade transition effect
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      transitionDuration:
-          const Duration(milliseconds: 1000), // Transition duration
-    );
-  }
-
   // Function to build the top decorative circle
   Widget _buildTopCircle() {
     return Positioned(
@@ -54,8 +60,9 @@ class StartingScreen extends StatelessWidget {
       top: -50, // Positioning the circle slightly off the top of the screen
       left: -50, // Positioning the circle slightly off the left of the screen
       child: Image.asset(
-        'assets/images/topCircleImage.png', // The image asset used for the top circle
-        width: 200, // Setting width of the circle
+        'assets/images/topCircleImage.png',
+        fit: BoxFit.fitWidth, // The image asset used for the top circle
+        width: gestureTap ? 800 : 200, // Setting width of the circle
         height: 200, // Setting height of the circle to maintain aspect ratio
       ),
     );
@@ -69,7 +76,8 @@ class StartingScreen extends StatelessWidget {
       right: -50, // Moving the circle off the right of the screen
       child: Image.asset(
         'assets/images/bottomCircleImage.png', // The image asset for the bottom circle
-        width: 200, // Setting width of the circle
+        fit: BoxFit.fitWidth,
+        width: gestureTap ? 800 : 200, // Setting width of the circle
         height: 200, // Setting height of the circle to maintain aspect ratio
       ),
     );

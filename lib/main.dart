@@ -1,4 +1,8 @@
+import 'package:emotiease/pages/signin_screen.dart';
 import 'package:emotiease/pages/starting_screen.dart';
+import 'package:emotiease/routes/routes.dart';
+import 'package:emotiease/widgets/system_ui.dart';
+import 'package:emotiease/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,8 +10,10 @@ void main() {
   //! Hiding Top Status Bar and Nav Bar
   WidgetsFlutterBinding
       .ensureInitialized(); //! Ensurement of Flutter Framework Initialization
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-      overlays: []); //* Customizing System UI
+
+  //! Setting System UI Overlay Style (Status + Nav Bar)
+  SystemChrome.setSystemUIOverlayStyle(SystemUi.setSystemUiOverlayStyle());
+
   runApp(const MyApp(
     appTitle: "Emotiease",
   ));
@@ -25,13 +31,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //! Hiding Debug Mode Banner
       debugShowCheckedModeBanner: false,
+      
       //* Setting Material App Content
+      //! Setting App Title
       title: appTitle,
-      theme: ThemeData(
-        primaryColor: Colors.black,
-        fontFamily: "Poppins",
-      ),
-      home: const StartingScreen(),
+      
+      //! Setting Theme
+      themeMode: ThemeMode.dark,
+      darkTheme: MyAppThemes.darkTheme(),
+      
+      //! Setting Routes
+      initialRoute: AppRoutes.startingScreen,
+      routes: {
+        AppRoutes.startingScreen: (context) => StartingScreen(),
+        AppRoutes.signInScreen: (context) => const SignInScreen(),
+      },
+
     );
   }
 }
