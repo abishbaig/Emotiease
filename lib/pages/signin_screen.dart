@@ -1,3 +1,4 @@
+import 'package:emotiease/pages/starting_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -9,6 +10,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+  bool changeButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,27 +31,18 @@ class _SignInScreenState extends State<SignInScreen> {
                   SizedBox(height: screenHeight * 0.05), // Responsive spacing
                   _signInHeader(),
                   SizedBox(height: screenHeight * 0.05),
-                  _formFields(screenWidth),
+                  _formFields(screenWidth, screenHeight),
                   SizedBox(height: screenHeight * 0.02),
-                  _forgetPassBtn(screenWidth),
-
-                  //_buildGoogleButton(),
-                  //SizedBox(height: screenHeight * 0.02),
-                  //_buildFacebookButton(),
-                  //SizedBox(height: screenHeight * 0.03),
-                  //_buildOrSeparator(),
-                  //SizedBox(height: screenHeight * 0.03),
-                  //_buildEmailField(),
-                  //SizedBox(height: screenHeight * 0.02),
-                  //_buildPasswordField(),
-                  //SizedBox(height: screenHeight * 0.01),
-                  //_buildForgotPassword(),
-                  //SizedBox(height: screenHeight * 0.04),
-                  //_buildDragInstruction(),
-                  //SizedBox(height: screenHeight * 0.02),
-                  //_buildSignInButton(screenWidth),
-                  //SizedBox(height: screenHeight * 0.03),
-                  //_buildFooter(),
+                  _forgetPassBtn(screenWidth, screenHeight),
+                  SizedBox(height: screenHeight * 0.07),
+                  _signInBtn(screenWidth, screenHeight),
+                  SizedBox(height: screenHeight * 0.05),
+                  _dontAccountBtn(),
+                  SizedBox(height: screenHeight * 0.02),
+                  _authOptions(screenWidth, screenHeight),
+                  SizedBox(height: screenHeight * 0.09),
+                  _createAccBtn(screenWidth, screenHeight),
+                  SizedBox(height: screenHeight * 0.01),
                 ],
               ),
             ),
@@ -71,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _formFields(double screenWidth) {
+  Widget _formFields(double screenWidth, double screenHeight) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: screenWidth * 0.02,
@@ -81,6 +74,20 @@ class _SignInScreenState extends State<SignInScreen> {
         children: [
           TextFormField(
             decoration: InputDecoration(
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
                 borderSide: const BorderSide(
@@ -95,10 +102,11 @@ class _SignInScreenState extends State<SignInScreen> {
                   width: 2,
                 ),
               ),
-              hintText: "Email",
+              hintText: "E-mail",
               hintStyle: const TextStyle(
-                fontSize: 18,
+                fontSize: 13,
               ),
+              contentPadding: const EdgeInsets.only(left: 25, top: 30),
               filled: true,
               fillColor: const Color.fromRGBO(179, 132, 255, 0.2),
             ),
@@ -113,6 +121,20 @@ class _SignInScreenState extends State<SignInScreen> {
           TextFormField(
             obscureText: true,
             decoration: InputDecoration(
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
                 borderSide: const BorderSide(
@@ -129,8 +151,9 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               hintText: "Password",
               hintStyle: const TextStyle(
-                fontSize: 18,
+                fontSize: 13,
               ),
+              contentPadding: const EdgeInsets.only(left: 25, top: 30),
               filled: true,
               fillColor: const Color.fromRGBO(179, 132, 255, 0.2),
             ),
@@ -146,22 +169,195 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _forgetPassBtn(double screenWidth) {
-    return InkWell(
-      child: Container(
+  Widget _forgetPassBtn(double screenWidth, double screenHeight) {
+    return Padding(
+      padding: EdgeInsets.only(left: screenWidth * 0.55),
+      child: Material(
         color: Colors.transparent,
-        width: screenWidth * 0.87,
-        child: const Text(
-          "Forgot Password?",
-          textAlign: TextAlign.end,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
+        borderRadius: BorderRadius.circular(5),
+        child: InkWell(
+          splashColor: const Color.fromRGBO(63, 15, 75, 0.498),
+          borderRadius: BorderRadius.circular(5),
+          child: const Text(
+            "Forgot Password?",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
           ),
+          onTap: () {
+            // TODOs Handle button tap
+            debugPrint("Forgot Password button clicked!");
+          },
         ),
       ),
     );
   }
 
-  
+  moveToHome(context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        changeButton = true;
+      });
+
+      await Future.delayed(const Duration(seconds: 2));
+
+      //TODOs : Have to Setup Screen Navigation for "Home page"
+      await Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const StartingScreen()));
+      setState(() {
+        changeButton = false;
+      });
+    }
+  }
+
+  Widget _signInBtn(double screenWidth, double screenHeight) {
+    return Material(
+      color: const Color.fromRGBO(179, 132, 255, 1),
+      borderRadius: BorderRadius.circular(changeButton ? 50 : 50),
+      child: InkWell(
+        splashColor: Colors.white,
+        borderRadius: BorderRadius.circular(changeButton ? 50 : 50),
+        onTap: () => moveToHome(context),
+        child: AnimatedContainer(
+          width: changeButton ? screenWidth * 0.15 : screenWidth * 0.6,
+          height: screenHeight * 0.065,
+          alignment: Alignment.center,
+          duration: const Duration(
+            seconds: 2,
+          ),
+          child: changeButton
+              ? const Icon(
+                  Icons.done,
+                  color: Colors.white,
+                )
+              : const Text(
+                  "Sign In.",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
+
+  Widget _dontAccountBtn() {
+    return const Text(
+      "Don't have an account?",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 12,
+      ),
+    );
+  }
+
+  Widget _authOptions(double screenWidth, double screenHeight) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Material(
+            color: const Color.fromRGBO(179, 132, 255, 1),
+            borderRadius: BorderRadius.circular(50),
+            child: InkWell(
+              splashColor: Colors.deepPurple,
+              borderRadius: BorderRadius.circular(50),
+              onTap: () {
+                //! FaceBook Button
+                //TODOs Facebook btn implementation
+              },
+              child: Container(
+                width: screenWidth * 0.14,
+                height: screenHeight * 0.065,
+                alignment: Alignment.center,
+                child: Image.asset(
+                  "assets/images/facebookIcon.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Material(
+            color: const Color.fromRGBO(179, 132, 255, 1),
+            borderRadius: BorderRadius.circular(50),
+            child: InkWell(
+              splashColor: Colors.deepPurple,
+              borderRadius: BorderRadius.circular(50),
+              onTap: () {
+                //! Google Button
+                //TODOs Google btn implementation
+              },
+              child: Container(
+                width: screenWidth * 0.14,
+                height: screenHeight * 0.065,
+                alignment: Alignment.center,
+                child: Image.asset(
+                  "assets/images/googleIcon.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Material(
+            color: const Color.fromRGBO(179, 132, 255, 1),
+            borderRadius: BorderRadius.circular(50),
+            child: InkWell(
+              splashColor: Colors.deepPurple,
+              borderRadius: BorderRadius.circular(50),
+              onTap: () {
+                //! Twitter Button
+                //TODOs Twitter btn implementation
+              },
+              child: Container(
+                width: screenWidth * 0.14,
+                height: screenHeight * 0.065,
+                alignment: Alignment.center,
+                child: Image.asset(
+                  "assets/images/twitterIcon.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _createAccBtn(double screenWidth, double screenHeight) {
+    return Material(
+      color: const Color.fromRGBO(179, 132, 255, 1),
+      borderRadius: BorderRadius.circular(50),
+      child: InkWell(
+        splashColor: Colors.white70,
+        borderRadius: BorderRadius.circular(50),
+        onTap: () {
+          //TODOs Create Account Page and logic
+        },
+        child: Container(
+          width: screenWidth * 0.6,
+          height: screenHeight * 0.065,
+          alignment: Alignment.center,
+          child: const Text(
+            "Create account",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

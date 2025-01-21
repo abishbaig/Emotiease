@@ -33,7 +33,7 @@ class _StartingScreenState extends State<StartingScreen> {
         await Navigator.pushReplacement(
           context,
           //AppRoutes.signInScreen,
-          MaterialPageRoute(builder: (context) => SignInScreen(),)
+          MaterialPageRoute(builder: (context) => const SignInScreen(),)
         );
         setState(() {
           gestureTap = false;

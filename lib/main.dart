@@ -10,7 +10,7 @@ void main() {
   //! Hiding Top Status Bar and Nav Bar
   WidgetsFlutterBinding
       .ensureInitialized(); //! Ensurement of Flutter Framework Initialization
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   //! Setting System UI Overlay Style (Status + Nav Bar)
   SystemChrome.setSystemUIOverlayStyle(SystemUi.setSystemUiOverlayStyle());
 
@@ -41,10 +41,10 @@ class MyApp extends StatelessWidget {
       darkTheme: MyAppThemes.darkTheme(),
 
       //! Setting Routes
-      initialRoute: AppRoutes.signInScreen,
+      initialRoute: AppRoutes.startingScreen,
       routes: {
-        AppRoutes.startingScreen: (context) => StartingScreen(),
-        AppRoutes.signInScreen: (context) => SignInScreen(),
+        AppRoutes.startingScreen: (context) => const StartingScreen(),
+        AppRoutes.signInScreen: (context) => const SignInScreen(),
       },
     );
   }

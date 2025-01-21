@@ -4,11 +4,12 @@ import 'package:flutter/services.dart';
 class SystemUi {
   static SystemUiOverlayStyle setSystemUiOverlayStyle() {
     return const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarColor: Color.fromRGBO(0, 0, 0, 0.01),
       statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light,
-      systemNavigationBarColor: Colors.white,
+      statusBarBrightness: Brightness.dark,
       systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Color.fromRGBO(0, 0, 0, 0.01),
+      //systemNavigationBarIconBrightness: Brightness.dark,
     );
   }
 }
