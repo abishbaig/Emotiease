@@ -1,5 +1,4 @@
 import 'package:emotiease/pages/signin_screen.dart';
-import 'package:emotiease/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class StartingScreen extends StatefulWidget {
@@ -32,10 +31,11 @@ class _StartingScreenState extends State<StartingScreen> {
         // Navigate to the Sign In Screen
         await Future.delayed(const Duration(seconds: 1));
         await Navigator.pushReplacement(
-          context,
-          //AppRoutes.signInScreen,
-          MaterialPageRoute(builder: (context) => const SignInScreen(),)
-        );
+            context,
+            //AppRoutes.signInScreen,
+            MaterialPageRoute(
+              builder: (context) => const SignInScreen(),
+            ));
         setState(() {
           gestureTap = false;
         });
@@ -73,7 +73,7 @@ class _StartingScreenState extends State<StartingScreen> {
     return Positioned(
       // Positioned widget to place the bottom circle in a custom position
       bottom: -50, // Moving the circle off the bottom of the screen
-      right: -50, // Moving the circle off the right of the screen
+      right: -75, // Moving the circle off the right of the screen
       child: Image.asset(
         'assets/images/bottomCircleImage.png', // The image asset for the bottom circle
         fit: BoxFit.fitWidth,
