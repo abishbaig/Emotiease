@@ -1,5 +1,4 @@
 import 'package:emotiease/pages/signin_screen.dart';
-import 'package:emotiease/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class StartingScreen extends StatefulWidget {
