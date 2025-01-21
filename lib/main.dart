@@ -31,22 +31,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //! Hiding Debug Mode Banner
       debugShowCheckedModeBanner: false,
-      
+
       //* Setting Material App Content
       //! Setting App Title
       title: appTitle,
-      
+
       //! Setting Theme
       themeMode: ThemeMode.dark,
       darkTheme: MyAppThemes.darkTheme(),
-      
+
       //! Setting Routes
-      initialRoute: AppRoutes.startingScreen,
+      initialRoute: AppRoutes.signInScreen,
       routes: {
         AppRoutes.startingScreen: (context) => StartingScreen(),
-        AppRoutes.signInScreen: (context) => const SignInScreen(),
+        AppRoutes.signInScreen: (context) => SignInScreen(),
       },
-
     );
   }
 }
