@@ -1,16 +1,15 @@
-import 'package:emotiease/pages/signup_screen.dart';
+import 'package:emotiease/pages/signin_screen.dart';
 import 'package:emotiease/pages/starting_screen.dart';
-import 'package:emotiease/routes/routes.dart';
 import 'package:flutter/material.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool changeButton = false;
 
@@ -41,15 +40,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   SizedBox(height: screenHeight * 0.05),
                   _formFields(screenWidth, screenHeight),
                   SizedBox(height: screenHeight * 0.02),
-                  _forgetPassBtn(screenWidth, screenHeight),
+                  _createAccBtn(screenWidth, screenHeight),
+                  SizedBox(height: screenHeight * 0.09),
+                  _orTxt(),
+                  SizedBox(height: screenHeight * 0.1),
+                  _alrdyAccTxt(),
                   SizedBox(height: screenHeight * 0.07),
                   _signInBtn(screenWidth, screenHeight),
-                  SizedBox(height: screenHeight * 0.05),
-                  _dontAccountTxt(),
-                  SizedBox(height: screenHeight * 0.02),
-                  _authOptions(screenWidth, screenHeight),
-                  SizedBox(height: screenHeight * 0.09),
-                  _createAccBtn(screenWidth, screenHeight),
                   SizedBox(height: screenHeight * 0.01),
                 ],
               ),
@@ -63,7 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
   // Function to build the title
   Widget _signInHeader() {
     return const Text(
-      'Sign In.',
+      'Sign Up.',
       style: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
@@ -81,6 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Column(
         children: [
           TextFormField(
+            keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
@@ -121,6 +119,52 @@ class _SignInScreenState extends State<SignInScreen> {
             validator: (value) {
               if (value!.isEmpty) {
                 return "Email cannot be empty!";
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: screenWidth * 0.04),
+          TextFormField(
+            decoration: InputDecoration(
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(
+                  color: Colors.deepPurple,
+                  width: 2,
+                ),
+              ),
+              hintText: "Username",
+              hintStyle: const TextStyle(
+                fontSize: 13,
+              ),
+              contentPadding: const EdgeInsets.only(left: 25, top: 30),
+              filled: true,
+              fillColor: const Color.fromRGBO(179, 132, 255, 0.2),
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Username cannot be empty!";
               }
               return null;
             },
@@ -177,32 +221,13 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _forgetPassBtn(double screenWidth, double screenHeight) {
-    return Padding(
-      padding: EdgeInsets.only(left: screenWidth * 0.55),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(5),
-        child: InkWell(
-          splashColor: const Color.fromRGBO(63, 15, 75, 0.498),
-          borderRadius: BorderRadius.circular(5),
-          child: const Text(
-            "Forgot Password?",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
-          ),
-          onTap: () {
-            // TODOs Handle button tap
-            debugPrint("Forgot Password button clicked!");
-          },
-        ),
-      ),
-    );
+  moveToSignInDct(BuildContext context) {
+    //TODOs : Have to Setup Screen Navigation for "Home page"
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const SignInScreen()));
   }
 
-  moveToHome(context) async {
+  moveToSignInAuth(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         changeButton = true;
@@ -212,28 +237,21 @@ class _SignInScreenState extends State<SignInScreen> {
 
       //TODOs : Have to Setup Screen Navigation for "Home page"
       await Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const StartingScreen()));
+          MaterialPageRoute(builder: (context) => const SignInScreen()));
       setState(() {
         changeButton = false;
       });
     }
   }
 
-  moveToSignUp(context) async {
-    //await Future.delayed(const Duration(seconds: 2));
-
-    Navigator.pushNamed(context, AppRoutes.signUpScreen);
-    
-  }
-
-  Widget _signInBtn(double screenWidth, double screenHeight) {
+  Widget _createAccBtn(double screenWidth, double screenHeight) {
     return Material(
       color: const Color.fromRGBO(179, 132, 255, 1),
       borderRadius: BorderRadius.circular(changeButton ? 50 : 50),
       child: InkWell(
         splashColor: Colors.white,
         borderRadius: BorderRadius.circular(changeButton ? 50 : 50),
-        onTap: () => moveToHome(context),
+        onTap: () => moveToSignInAuth(context),
         child: AnimatedContainer(
           width: changeButton ? screenWidth * 0.15 : screenWidth * 0.6,
           height: screenHeight * 0.065,
@@ -247,7 +265,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   color: Colors.white,
                 )
               : const Text(
-                  "Sign In.",
+                  "Create account",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -259,9 +277,9 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _dontAccountTxt() {
+  Widget _alrdyAccTxt() {
     return const Text(
-      "Don't have an account?",
+      "Already have an account?",
       style: TextStyle(
         color: Colors.white,
         fontSize: 12,
@@ -269,87 +287,18 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _authOptions(double screenWidth, double screenHeight) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Material(
-            color: const Color.fromRGBO(179, 132, 255, 1),
-            borderRadius: BorderRadius.circular(50),
-            child: InkWell(
-              splashColor: Colors.deepPurple,
-              borderRadius: BorderRadius.circular(50),
-              onTap: () {
-                //! FaceBook Button
-                //TODOs Facebook btn implementation
-              },
-              child: Container(
-                width: screenWidth * 0.14,
-                height: screenHeight * 0.065,
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/images/facebookIcon.png",
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Material(
-            color: const Color.fromRGBO(179, 132, 255, 1),
-            borderRadius: BorderRadius.circular(50),
-            child: InkWell(
-              splashColor: Colors.deepPurple,
-              borderRadius: BorderRadius.circular(50),
-              onTap: () {
-                //! Google Button
-                //TODOs Google btn implementation
-              },
-              child: Container(
-                width: screenWidth * 0.14,
-                height: screenHeight * 0.065,
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/images/googleIcon.png",
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Material(
-            color: const Color.fromRGBO(179, 132, 255, 1),
-            borderRadius: BorderRadius.circular(50),
-            child: InkWell(
-              splashColor: Colors.deepPurple,
-              borderRadius: BorderRadius.circular(50),
-              onTap: () {
-                //! Twitter Button
-                //TODOs Twitter btn implementation
-              },
-              child: Container(
-                width: screenWidth * 0.14,
-                height: screenHeight * 0.065,
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/images/twitterIcon.png",
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+  Widget _orTxt() {
+    return const Text(
+      "Or",
+      style: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+      ),
     );
   }
 
-  Widget _createAccBtn(double screenWidth, double screenHeight) {
+  Widget _signInBtn(double screenWidth, double screenHeight) {
     return Material(
       color: const Color.fromRGBO(179, 132, 255, 1),
       borderRadius: BorderRadius.circular(50),
@@ -358,14 +307,14 @@ class _SignInScreenState extends State<SignInScreen> {
         borderRadius: BorderRadius.circular(50),
         onTap: () {
           //TODOs Create Account Page and logic
-          moveToSignUp(context);
+          moveToSignInDct(context);
         },
         child: Container(
           width: screenWidth * 0.6,
           height: screenHeight * 0.065,
           alignment: Alignment.center,
           child: const Text(
-            "Create account",
+            "Signin",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

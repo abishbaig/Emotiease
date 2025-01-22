@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 class MyAppThemes {
   static ThemeData lightTheme() => ThemeData(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ),
         fontFamily: "Poppins",
         primarySwatch: Colors.blue,
         primaryColor: Colors.blue,
@@ -10,6 +14,10 @@ class MyAppThemes {
       );
 
   static ThemeData darkTheme() => ThemeData(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ),
         fontFamily: "Poppins",
         scaffoldBackgroundColor: Colors.black,
         primarySwatch: Colors.blue,

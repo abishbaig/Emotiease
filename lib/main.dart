@@ -1,4 +1,6 @@
+import 'package:emotiease/pages/home_page.dart';
 import 'package:emotiease/pages/signin_screen.dart';
+import 'package:emotiease/pages/signup_screen.dart';
 import 'package:emotiease/pages/starting_screen.dart';
 import 'package:emotiease/routes/routes.dart';
 import 'package:emotiease/widgets/system_ui.dart';
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.startingScreen: (context) => const StartingScreen(),
         AppRoutes.signInScreen: (context) => const SignInScreen(),
+        AppRoutes.signUpScreen: (context) => const SignUpScreen(),
+        AppRoutes.homeScreen: (context) => const HomePage(),
       },
     );
   }
