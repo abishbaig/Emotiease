@@ -11,10 +11,12 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool changeButton = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
     changeButton = false;
+    _obscureText = true;
     super.initState();
   }
 
@@ -170,7 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           SizedBox(height: screenWidth * 0.04),
           TextFormField(
-            obscureText: true,
+            obscureText: _obscureText,
             decoration: InputDecoration(
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
@@ -203,6 +205,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: "Password",
               hintStyle: const TextStyle(
                 fontSize: 13,
+              ),
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+                child: Icon(
+                    _obscureText ? Icons.visibility : Icons.visibility_off),
               ),
               contentPadding: const EdgeInsets.only(left: 25, top: 30),
               filled: true,
