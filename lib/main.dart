@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.startingScreen: (context) => const StartingScreen(),
         AppRoutes.signInScreen: (context) => const SignInScreen(),
         AppRoutes.signUpScreen: (context) => const SignUpScreen(),
-        AppRoutes.homeScreen: (context) => const HomePage(),
+        AppRoutes.homeScreen: (context) => HomePage(),
       },
     );
   }
