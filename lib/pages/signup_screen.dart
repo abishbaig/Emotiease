@@ -213,7 +213,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   });
                 },
                 child: Icon(
-                    _obscureText ? Icons.visibility : Icons.visibility_off),
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.white54,
+                ),
               ),
               contentPadding: const EdgeInsets.only(left: 25, top: 30),
               filled: true,
@@ -222,6 +224,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             validator: (value) {
               if (value!.isEmpty) {
                 return "Password cannot be empty!!";
+              } else if (value.length < 8) {
+                return "Password must be at least 8 characters long!";
+              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                return "At least one special character required!";
               }
               return null;
             },

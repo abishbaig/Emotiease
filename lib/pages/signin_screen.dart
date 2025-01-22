@@ -1,4 +1,4 @@
-import 'package:emotiease/pages/starting_screen.dart';
+import 'package:emotiease/pages/home_page.dart';
 import 'package:emotiease/routes/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -169,7 +169,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   });
                 },
                 child: Icon(
-                    _obscureText ? Icons.visibility : Icons.visibility_off),
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.white54,
+                ),
               ),
               contentPadding: const EdgeInsets.only(left: 25, top: 30),
               filled: true,
@@ -221,8 +223,8 @@ class _SignInScreenState extends State<SignInScreen> {
       await Future.delayed(const Duration(seconds: 2));
 
       //TODOs : Have to Setup Screen Navigation for "Home page"
-      await Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const StartingScreen()));
+      await Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
       setState(() {
         changeButton = false;
       });
