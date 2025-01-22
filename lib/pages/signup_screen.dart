@@ -1,5 +1,4 @@
 import 'package:emotiease/pages/signin_screen.dart';
-import 'package:emotiease/pages/starting_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {

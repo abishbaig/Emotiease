@@ -1,4 +1,3 @@
-import 'package:emotiease/pages/signup_screen.dart';
 import 'package:emotiease/pages/starting_screen.dart';
 import 'package:emotiease/routes/routes.dart';
 import 'package:flutter/material.dart';
