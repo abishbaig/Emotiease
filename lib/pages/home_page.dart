@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget {
             children: [
               _appBar(screenWidth, screenHeight),
               _welcomeTitle(screenWidth, screenHeight),
+              _pageOptions(screenWidth, screenHeight),
               _backImg(screenWidth, screenHeight),
             ],
           ),
@@ -33,54 +34,56 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _appBar(double screenWidth, double screenHeight) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: screenHeight * 0.055, horizontal: screenWidth * 0.025),
-        color: Colors.transparent,
-        width: screenWidth,
-        height: screenHeight * 0.06,
-        child: Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: screenWidth * 0.03),
-              child: GestureDetector(
-                onTap: () {
-                  _scaffoldKey.currentState?.openDrawer();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.menu,
-                      color: Colors.white54,
+    return Positioned(
+      top: screenHeight * 0.05,
+      left: screenWidth * 0.02,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Container(
+          color: Colors.transparent,
+          width: screenWidth,
+          height: screenHeight * 0.06,
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: screenWidth * 0.03),
+                child: GestureDetector(
+                  onTap: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.menu,
+                        color: Colors.white54,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: screenWidth * 0.3),
-              child: Text(
-                "Hi, $userName",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
+              Padding(
+                padding: EdgeInsets.only(left: screenWidth * 0.3),
+                child: Text(
+                  "Hi, $userName",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: screenWidth * 0.22),
-              child: const CircleAvatar(
-                backgroundImage: AssetImage("assets/images/userImg.jpg"),
+              Padding(
+                padding: EdgeInsets.only(left: screenWidth * 0.22),
+                child: const CircleAvatar(
+                  backgroundImage: AssetImage("assets/images/userImg.jpg"),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -98,8 +101,8 @@ class HomePage extends StatelessWidget {
 
   Widget _welcomeTitle(double screenWidth, double screenHeight) {
     return Positioned(
-      top: screenHeight * 0.15,
-      left: screenWidth * 0.085,
+      top: screenHeight * 0.13,
+      left: screenWidth * 0.08,
       child: Container(
         width: screenWidth * 0.8,
         height: screenHeight * 0.105,
@@ -147,6 +150,21 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _pageOptions(double screenWidth, double screenHeight) {
+    return Positioned(
+      top: screenHeight * 0.255,
+      left: screenWidth * 0.05,
+      child: Container(
+        width: screenWidth * 0.9,
+        height: screenHeight * 0.6,
+        color: Colors.red,
+        child: GridView.count(
+          crossAxisCount: 2,
         ),
       ),
     );
