@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       darkTheme: MyAppThemes.darkTheme(),
 
       //! Setting Routes
-      initialRoute: AppRoutes.startingScreen,
+      initialRoute: AppRoutes.homeScreen,
       routes: {
         AppRoutes.startingScreen: (context) => const StartingScreen(),
         AppRoutes.signInScreen: (context) => const SignInScreen(),

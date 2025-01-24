@@ -12,7 +12,9 @@ class HomePage extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width; // For dynamic width
     return Scaffold(
       key: _scaffoldKey,
-      drawer: const Drawer(),
+      drawer: Drawer(
+        width: screenWidth * 0.7,
+      ),
       body: SingleChildScrollView(
         child: Container(
           width: screenWidth,
@@ -21,6 +23,7 @@ class HomePage extends StatelessWidget {
           child: Stack(
             children: [
               _appBar(screenWidth, screenHeight),
+              _welcomeTitle(screenWidth, screenHeight),
               _backImg(screenWidth, screenHeight),
             ],
           ),
@@ -48,18 +51,21 @@ class HomePage extends StatelessWidget {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.black26,
-                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  child: const Icon(
-                    Icons.menu,
-                    color: Colors.white54,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.menu,
+                      color: Colors.white54,
+                    ),
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: screenWidth * 0.32),
+              padding: EdgeInsets.only(left: screenWidth * 0.3),
               child: Text(
                 "Hi, $userName",
                 style: const TextStyle(
@@ -69,7 +75,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: screenWidth * 0.25),
+              padding: EdgeInsets.only(left: screenWidth * 0.22),
               child: const CircleAvatar(
                 backgroundImage: AssetImage("assets/images/userImg.jpg"),
               ),
@@ -82,10 +88,66 @@ class HomePage extends StatelessWidget {
 
   Widget _backImg(double screenWidth, double screenHeight) {
     return Positioned(
-      top: screenHeight * -0.005,
-      left: screenWidth * 0.3,
+      top: screenHeight * -0.01,
+      left: screenWidth * 0.28,
       child: Image.asset(
         "assets/images/backDesign.png",
+      ),
+    );
+  }
+
+  Widget _welcomeTitle(double screenWidth, double screenHeight) {
+    return Positioned(
+      top: screenHeight * 0.15,
+      left: screenWidth * 0.085,
+      child: Container(
+        width: screenWidth * 0.8,
+        height: screenHeight * 0.105,
+        color: Colors.transparent,
+        child: const Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  "How are ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  "you",
+                  style: TextStyle(
+                    color: Colors.lime,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "feeling ",
+                  style: TextStyle(
+                    color: Colors.lime,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "today ?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
