@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final String userName = "Abish";
+  final String userName = "Muhammad Abish Baig";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -13,9 +13,7 @@ class HomePage extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width; // For dynamic width
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        width: screenWidth * 0.7,
-      ),
+      drawer: _buildDrawer(screenWidth, screenHeight, userName),
       body: SingleChildScrollView(
         child: Container(
           width: screenWidth,
@@ -35,18 +33,20 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _appBar(double screenWidth, double screenHeight) {
+    double appBarHeight = screenHeight * 0.06;
+    double appBarWidth = screenWidth * 0.88;
     return Positioned(
-      top: screenHeight * 0.05,
-      left: screenWidth * 0.02,
+      top: screenHeight * 0.06,
+      left: screenWidth * 0.055,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SizedBox(
-          width: screenWidth,
-          height: screenHeight * 0.06,
-          child: Row(
+          width: appBarWidth,
+          height: appBarHeight,
+          child: Stack(
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: screenWidth * 0.03),
+              Positioned(
+                left: 0,
                 child: GestureDetector(
                   onTap: () {
                     _scaffoldKey.currentState?.openDrawer();
@@ -66,19 +66,20 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: screenWidth * 0.3),
+              Positioned(
+                left: appBarWidth * 0.3,
+                top: appBarHeight * 0.2,
                 child: Text(
                   "Hi, $userName",
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: screenWidth * 0.22),
-                child: const CircleAvatar(
+              const Positioned(
+                right: 0,
+                child: CircleAvatar(
                   backgroundImage: AssetImage("assets/images/userImg.jpg"),
                 ),
               ),
@@ -423,6 +424,114 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Function to build the drawer UI
+  Widget _buildDrawer(
+      double screenWidth, double screenHeight, String userName) {
+    double drawerWidth = screenWidth * 0.7;
+    return Drawer(
+      width: drawerWidth,
+      backgroundColor: Colors.black,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // User Information Section
+            const SizedBox(height: 30),
+            SizedBox(
+              width: drawerWidth,
+              child: Padding(
+                padding: EdgeInsets.only(left: drawerWidth * 0.045),
+                child: Text(
+                  userName,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {}, //TODOS Have to Replace with action
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                side: const BorderSide(color: Colors.grey),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    CupertinoIcons.pencil,
+                    color: Colors.white,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: drawerWidth * 0.05),
+                    child: const Text(
+                      "Edit Profile",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Divider(color: Colors.grey),
+
+            // Menu Items
+            _buildMenuItem(() {}, Icons.notifications, "Notifications", 12),
+            _buildMenuItem(() {}, Icons.message, "Messages", 1),
+            const Divider(color: Colors.grey),
+            _buildMenuItem(() {}, Icons.help_outline, "Help"),
+            _buildMenuItem(() {}, Icons.settings, "Settings"),
+            const Divider(color: Colors.grey),
+            _buildMenuItem(() {}, Icons.logout, "Log Out"),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Function to build each menu item
+  Widget _buildMenuItem(VoidCallback onTap, IconData icon, String title,
+      [int? badge]) {
+    return Material(
+      color: Colors.black,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: Colors.white.withOpacity(0.5),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(icon, color: Colors.white),
+                  const SizedBox(width: 10),
+                  Text(title, style: const TextStyle(color: Colors.white)),
+                ],
+              ),
+              if (badge != null)
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    "$badge",
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
             ],
           ),
         ),
