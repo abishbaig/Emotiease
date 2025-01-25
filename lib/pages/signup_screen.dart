@@ -1,4 +1,5 @@
 import 'package:emotiease/pages/signin_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -12,9 +13,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool changeButton = false;
   bool _obscureText = true;
+  bool _isLoading = false;
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
+    _isLoading = false;
     changeButton = false;
     _obscureText = true;
     super.initState();
@@ -39,7 +46,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(height: screenHeight * 0.05), // Responsive spacing
                   _signInHeader(),
                   SizedBox(height: screenHeight * 0.05),
-                  _formFields(screenWidth, screenHeight),
+                  _isLoading
+                      ? const CircularProgressIndicator.adaptive()
+                      : _formFields(screenWidth, screenHeight),
                   SizedBox(height: screenHeight * 0.02),
                   _createAccBtn(screenWidth, screenHeight),
                   SizedBox(height: screenHeight * 0.09),
@@ -79,6 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Column(
         children: [
           TextFormField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               focusedErrorBorder: OutlineInputBorder(
@@ -126,6 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           SizedBox(height: screenWidth * 0.04),
           TextFormField(
+            controller: _usernameController,
             decoration: InputDecoration(
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
@@ -172,6 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           SizedBox(height: screenWidth * 0.04),
           TextFormField(
+            controller: _passwordController,
             obscureText: _obscureText,
             decoration: InputDecoration(
               focusedErrorBorder: OutlineInputBorder(
@@ -246,18 +258,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
   moveToSignInAuth(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        changeButton = true;
+        _isLoading = true;
       });
+      // ignore: unused_local_variable
+      UserCredential? userCredential;
+      try {
+        userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        )
+            .then((value) async {
+          setState(() {
+            _isLoading = false;
+            changeButton = true;
+          });
 
-      await Future.delayed(const Duration(seconds: 2));
+          await Future.delayed(const Duration(seconds: 2));
 
-      //TODOs : Have to Setup Screen Navigation for "Home page"
-      await Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const SignInScreen()));
-      setState(() {
-        changeButton = false;
-      });
+          //TODOs : Have to Setup Screen Navigation for "Home page"
+          await Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const SignInScreen()));
+          setState(() {
+            changeButton = false;
+          });
+          return null;
+        });
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        return errorDialog(context, e);
+      }
     }
+  }
+
+  Future<dynamic> errorDialog(BuildContext context, FirebaseAuthException e) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(e.message ?? 'An error occurred'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget _createAccBtn(double screenWidth, double screenHeight) {

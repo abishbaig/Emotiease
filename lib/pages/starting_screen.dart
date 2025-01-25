@@ -1,4 +1,6 @@
+import 'package:emotiease/pages/home_page.dart';
 import 'package:emotiease/pages/signin_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StartingScreen extends StatefulWidget {
@@ -24,21 +26,7 @@ class _StartingScreenState extends State<StartingScreen> {
 
     // Scaffold widget provides the basic visual structure for the screen
     return GestureDetector(
-      onTap: () async {
-        setState(() {
-          gestureTap = true;
-        });
-        // Navigate to the Sign In Screen
-        await Future.delayed(const Duration(seconds: 1));
-        await Navigator.pushReplacement(
-          context,
-          //AppRoutes.signInScreen,
-          MaterialPageRoute(builder: (context) => const SignInScreen(),)
-        );
-        setState(() {
-          gestureTap = false;
-        });
-      },
+      onTap: () => checkUser(),
       child: Material(
         child: Stack(
           // Stack widget allows layering of different UI elements
@@ -50,6 +38,41 @@ class _StartingScreenState extends State<StartingScreen> {
         ),
       ),
     );
+  }
+
+  checkUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        gestureTap = true;
+      });
+      // Navigate to the Sign In Screen
+      await Future.delayed(const Duration(seconds: 1));
+      await Navigator.pushReplacement(
+          context,
+          //AppRoutes.signInScreen,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ));
+      setState(() {
+        gestureTap = false;
+      });
+    } else {
+      setState(() {
+        gestureTap = true;
+      });
+      // Navigate to the Sign In Screen
+      await Future.delayed(const Duration(seconds: 1));
+      await Navigator.pushReplacement(
+          context,
+          //AppRoutes.signInScreen,
+          MaterialPageRoute(
+            builder: (context) => const SignInScreen(),
+          ));
+      setState(() {
+        gestureTap = false;
+      });
+    }
   }
 
   // Function to build the top decorative circle

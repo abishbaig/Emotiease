@@ -1,8 +1,16 @@
+import 'package:emotiease/pages/starting_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final String userName = "Muhammad Abish Baig";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -13,7 +21,7 @@ class HomePage extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width; // For dynamic width
     return Scaffold(
       key: _scaffoldKey,
-      drawer: _buildDrawer(screenWidth, screenHeight, userName),
+      drawer: _buildDrawer(screenWidth, screenHeight, userName, context),
       body: SingleChildScrollView(
         child: Container(
           width: screenWidth,
@@ -431,9 +439,16 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget showEditProfBox() {
+    return Container(
+      color: Colors.red,
+      
+    );
+  }
+
   // Function to build the drawer UI
-  Widget _buildDrawer(
-      double screenWidth, double screenHeight, String userName) {
+  Widget _buildDrawer(double screenWidth, double screenHeight, String userName,
+      BuildContext context) {
     double drawerWidth = screenWidth * 0.7;
     return Drawer(
       width: drawerWidth,
@@ -460,7 +475,9 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {}, //TODOS Have to Replace with action
+              onPressed: () {
+                Navigator.pop(context);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 side: const BorderSide(color: Colors.grey),
@@ -493,7 +510,14 @@ class HomePage extends StatelessWidget {
             _buildMenuItem(() {}, Icons.help_outline, "Help"),
             _buildMenuItem(() {}, Icons.settings, "Settings"),
             const Divider(color: Colors.grey),
-            _buildMenuItem(() {}, Icons.logout, "Log Out"),
+            _buildMenuItem(() async {
+              await FirebaseAuth.instance.signOut().then((value) {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const StartingScreen()));
+              });
+            }, Icons.logout, "Log Out"),
           ],
         ),
       ),

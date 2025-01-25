@@ -1,5 +1,6 @@
 import 'package:emotiease/pages/home_page.dart';
 import 'package:emotiease/routes/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -12,10 +13,14 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   bool changeButton = false;
+  bool _isLoading = false;
   bool _obscureText = true;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
+    _isLoading = false;
     changeButton = false;
     _obscureText = true;
     super.initState();
@@ -40,7 +45,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   SizedBox(height: screenHeight * 0.05), // Responsive spacing
                   _signInHeader(),
                   SizedBox(height: screenHeight * 0.05),
-                  _formFields(screenWidth, screenHeight),
+                  _isLoading
+                      ? const CircularProgressIndicator.adaptive()
+                      : _formFields(screenWidth, screenHeight),
                   SizedBox(height: screenHeight * 0.02),
                   _forgetPassBtn(screenWidth, screenHeight),
                   SizedBox(height: screenHeight * 0.07),
@@ -82,6 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Column(
         children: [
           TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
@@ -128,6 +136,7 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           SizedBox(height: screenWidth * 0.04),
           TextFormField(
+            controller: _passwordController,
             obscureText: _obscureText,
             decoration: InputDecoration(
               focusedErrorBorder: OutlineInputBorder(
@@ -217,18 +226,60 @@ class _SignInScreenState extends State<SignInScreen> {
   moveToHome(context) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        changeButton = true;
+        _isLoading = true;
       });
 
-      await Future.delayed(const Duration(seconds: 2));
+      // ignore: unused_local_variable
+      UserCredential? userCredential;
 
-      //TODOs : Have to Setup Screen Navigation for "Home page"
-      await Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
-      setState(() {
-        changeButton = false;
-      });
+      try {
+        userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: _emailController.text,
+                password: _passwordController.text)
+            .then((value) async {
+          setState(() {
+            _isLoading = false;
+            changeButton = true;
+          });
+
+          await Future.delayed(const Duration(seconds: 2));
+
+          //TODOs : Have to Setup Screen Navigation for "Home page"
+          await Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+          setState(() {
+            changeButton = false;
+          });
+          return null;
+        });
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        return errorDialog(context, e);
+      }
     }
+  }
+
+  Future<dynamic> errorDialog(BuildContext context, FirebaseAuthException e) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(e.message ?? 'An error occurred'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   moveToSignUp(context) async {
