@@ -5,13 +5,15 @@ import 'package:emotiease/pages/starting_screen.dart';
 import 'package:emotiease/routes/routes.dart';
 import 'package:emotiease/widgets/system_ui.dart';
 import 'package:emotiease/widgets/themes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main () async{
   //! Hiding Top Status Bar and Nav Bar
   WidgetsFlutterBinding
       .ensureInitialized(); //! Ensurement of Flutter Framework Initialization
+  await Firebase.initializeApp(); //! Firebase Initialization
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   //! Setting System UI Overlay Style (Status + Nav Bar)
   SystemChrome.setSystemUIOverlayStyle(SystemUi.setSystemUiOverlayStyle());
