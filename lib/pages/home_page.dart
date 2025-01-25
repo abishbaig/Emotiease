@@ -11,8 +11,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final String userName = "Muhammad Abish Baig";
+  String userName = "User";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isEditBtnPress = false;
+
+  @override
+  void initState() {
+    userName = FirebaseAuth.instance.currentUser!.displayName!;
+    isEditBtnPress = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +96,8 @@ class _HomePageState extends State<HomePage> {
               const Positioned(
                 right: 0,
                 child: CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/userImg.jpg"),
+                  backgroundImage: AssetImage("assets/images/user.png"),
+                  backgroundColor: Colors.white,
                 ),
               ),
             ],
@@ -439,10 +448,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget showEditProfBox() {
-    return Container(
-      color: Colors.red,
-      
+  Widget showEditProfBox(double screenWidth, double screenHeight) {
+    return Positioned(
+      top: screenHeight * 0.2,
+      left: screenWidth * 0.1,
+      child: Container(
+        color: Colors.red,
+        width: screenWidth / 2,
+        height: screenHeight / 2,
+      ),
     );
   }
 
@@ -477,6 +491,7 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
+                //showEditProfBox(screenWidth, screenHeight);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,

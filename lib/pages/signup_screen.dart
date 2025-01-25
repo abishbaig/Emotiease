@@ -1,3 +1,4 @@
+import 'package:emotiease/pages/home_page.dart';
 import 'package:emotiease/pages/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -274,11 +275,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
             changeButton = true;
           });
 
+          FirebaseAuth.instance.currentUser!.updateDisplayName(
+            _usernameController.text,
+          );
+
           await Future.delayed(const Duration(seconds: 2));
 
           //TODOs : Have to Setup Screen Navigation for "Home page"
           await Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const SignInScreen()));
+              MaterialPageRoute(builder: (context) => const HomePage()));
           setState(() {
             changeButton = false;
           });
