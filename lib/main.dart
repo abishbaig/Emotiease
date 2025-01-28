@@ -1,3 +1,5 @@
+import 'package:emotiease/pages/api_test.dart';
+import 'package:emotiease/pages/chat_screen.dart';
 import 'package:emotiease/pages/home_page.dart';
 import 'package:emotiease/pages/signin_screen.dart';
 import 'package:emotiease/pages/signup_screen.dart';
@@ -9,7 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main () async{
+void main() async {
   //! Hiding Top Status Bar and Nav Bar
   WidgetsFlutterBinding
       .ensureInitialized(); //! Ensurement of Flutter Framework Initialization
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.signInScreen: (context) => const SignInScreen(),
         AppRoutes.signUpScreen: (context) => const SignUpScreen(),
         AppRoutes.homeScreen: (context) => const HomePage(),
+        AppRoutes.chatScreen: (context) => const ChatBot1(),
+        //AppRoutes.apiTest: (context) => ChatApp(),
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:emotiease/pages/starting_screen.dart';
+import 'package:emotiease/routes/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -219,7 +220,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 leadingTxt: "Quick Chat",
                 lastTxt: "Need to vent? Start a Quick Chat.",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.chatScreen);
+                },
                 width: containerWidth * 0.481,
                 height: containerHeight * 0.281,
               ),
