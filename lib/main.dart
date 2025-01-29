@@ -1,6 +1,8 @@
-import 'package:emotiease/pages/api_test.dart';
+import 'dart:io';
 import 'package:emotiease/pages/chat_screen.dart';
 import 'package:emotiease/pages/home_page.dart';
+import 'package:emotiease/pages/mood_screen.dart';
+import 'package:emotiease/pages/report_screen.dart';
 import 'package:emotiease/pages/signin_screen.dart';
 import 'package:emotiease/pages/signup_screen.dart';
 import 'package:emotiease/pages/starting_screen.dart';
@@ -11,7 +13,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+    ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+  }
+}
+
+
 void main() async {
+
+  //! Overriding SSl Verification Globally
+  HttpOverrides.global = MyHttpOverrides();
+
   //! Hiding Top Status Bar and Nav Bar
   WidgetsFlutterBinding
       .ensureInitialized(); //! Ensurement of Flutter Framework Initialization
@@ -54,7 +69,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.signUpScreen: (context) => const SignUpScreen(),
         AppRoutes.homeScreen: (context) => const HomePage(),
         AppRoutes.chatScreen: (context) => const ChatBot1(),
-        //AppRoutes.apiTest: (context) => ChatApp(),
+        AppRoutes.reportScreen: (context) => const ReportAnalysis(),
+        AppRoutes.moodScreen: (context) => const MoodAnalysis(),
       },
     );
   }

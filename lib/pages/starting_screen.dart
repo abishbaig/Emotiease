@@ -47,12 +47,12 @@ class _StartingScreenState extends State<StartingScreen> {
         gestureTap = true;
       });
       // Navigate to the Sign In Screen
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       await Navigator.pushReplacement(
           context,
           //AppRoutes.signInScreen,
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => const HomePage(),
           ));
       setState(() {
         gestureTap = false;
@@ -62,7 +62,7 @@ class _StartingScreenState extends State<StartingScreen> {
         gestureTap = true;
       });
       // Navigate to the Sign In Screen
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       await Navigator.pushReplacement(
           context,
           //AppRoutes.signInScreen,

@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Positioned(
-                left: appBarWidth * 0.3,
+                left: appBarWidth * 0.23,
                 top: appBarHeight * 0.2,
                 child: Text(
                   "Hi, $userName",
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
       left: screenWidth * 0.08,
       child: SizedBox(
         width: screenWidth * 0.8,
-        height: screenHeight * 0.105,
+        height: screenHeight * 0.12,
         child: const Column(
           children: [
             Row(
@@ -243,8 +243,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 leadingTxt: "Mood Diary",
                 lastTxt:
-                    "Capture your emotions daily for\nbetter self-awareness.",
-                onTap: () {},
+                    "Capture your emotions daily for better self-awareness.",
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.moodScreen);
+                },
                 width: containerWidth * 0.481,
                 height: containerHeight * 0.281,
               ),
@@ -284,7 +286,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 leadingTxt: "Report Analysis",
                 lastTxt: "Check your recent report.",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.reportScreen);
+                },
                 width: containerWidth,
                 height: containerHeight * 0.28,
               ),
@@ -346,21 +350,21 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   leadingTxt,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
               ),
               SizedBox(
-                height: height * 0.13,
+                height: height * 0.1,
               ),
               SizedBox(
                 width: width * 0.76,
                 child: Text(
                   lastTxt,
                   style: const TextStyle(
-                    fontSize: 7,
+                    fontSize: 6,
                     color: Colors.black,
                   ),
                 ),
