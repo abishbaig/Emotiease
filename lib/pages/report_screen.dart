@@ -10,23 +10,25 @@ class ReportAnalysis extends StatefulWidget {
 class _ReportAnalysisState extends State<ReportAnalysis> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: _buildAppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(),
-            const SizedBox(height: 30),
-            _buildReportCards(),
-            const SizedBox(height: 15),
-            _buildButtons(),
-            const SizedBox(height: 30),
-            _buildFooterText(),
-            const SizedBox(height: 30),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: _buildAppBar(),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(),
+              const SizedBox(height: 30),
+              _buildReportCards(),
+              const SizedBox(height: 15),
+              _buildButtons(),
+              const SizedBox(height: 30),
+              _buildFooterText(),
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
@@ -72,9 +74,11 @@ class _ReportAnalysisState extends State<ReportAnalysis> {
   Widget _buildReportCards() {
     return Column(
       children: [
-        _buildReportCard("Depression", "Severe", "78%", const Color(0xFFCA0B00)),
+        _buildReportCard(
+            "Depression", "Severe", "78%", const Color(0xFFCA0B00)),
         _buildReportCard("Isolation", "Milder", "56%", const Color(0xFFFF9900)),
-        _buildReportCard("Restlessness", "Severe", "80%", const Color(0xFFCA0B00)),
+        _buildReportCard(
+            "Restlessness", "Severe", "80%", const Color(0xFFCA0B00)),
         _buildReportCard("Confusing", "Stable", "30%", const Color(0xFF2DB731)),
       ],
     );
@@ -101,7 +105,8 @@ class _ReportAnalysisState extends State<ReportAnalysis> {
                 ),
                 const SizedBox(height: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 30),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 30),
                   decoration: BoxDecoration(
                     color: severityColor,
                     borderRadius: BorderRadius.circular(20),

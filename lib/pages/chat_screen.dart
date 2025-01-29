@@ -206,7 +206,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     ),
                                     const SizedBox(width: 12),
                                     ElevatedButton(
-
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
@@ -276,7 +275,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           final botName =
                                               _messageController.text.trim();
                                           if (botName.isNotEmpty) {
-                                            Navigator.push(
+                                            Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
@@ -492,7 +491,7 @@ class _ChattingMeState extends State<ChattingMe> {
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$seconds seconds';
+    return '$seconds secs';
   }
 
   void _showErrorDialog(String message) {
@@ -538,6 +537,16 @@ class _ChattingMeState extends State<ChattingMe> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 12),
+                                  child: Text(
+                                    'Wait: ${_formatDuration(_typingDuration)}',
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
                                 Container(
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 6),
@@ -566,16 +575,6 @@ class _ChattingMeState extends State<ChattingMe> {
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 12),
-                                  child: Text(
-                                    'Time elapsed: ${_formatDuration(_typingDuration)}',
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
                                   ),
                                 ),
                               ],
